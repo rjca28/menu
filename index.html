@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FPN · Painel de Ferramentas</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Saira:wght@500;600;700;800&family=Saira+Condensed:wght@600;700&family=Barlow:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --navy:#042C53; --blue:#185FA5; --gold:#BA7517;
+    --ink:#0c1a2b; --muted:#5b6b7d; --line:rgba(255,255,255,.12);
+  }
+  *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+  html{scroll-behavior:smooth}
+  body{
+    font-family:'Barlow',sans-serif;color:#eaf1f9;min-height:100vh;
+    background:
+      radial-gradient(120% 90% at 12% -5%, rgba(24,95,165,.55), transparent 55%),
+      radial-gradient(120% 90% at 95% 0%, rgba(186,117,23,.18), transparent 50%),
+      linear-gradient(160deg,#03203e 0%, #042C53 45%, #06376a 100%);
+    background-attachment:fixed;
+  }
+  h1,h2,.disp{font-family:'Saira',sans-serif;letter-spacing:-.01em}
+
+  .wrap{max-width:1080px;margin:0 auto;padding:34px 20px 60px}
+
+  /* header */
+  header{margin-bottom:30px}
+  .badge{display:inline-flex;align-items:center;gap:9px;font-weight:600;font-size:.7rem;letter-spacing:.18em;text-transform:uppercase;color:#cfe0f3;border:1px solid var(--line);padding:6px 13px;border-radius:30px}
+  .badge .dot{width:8px;height:8px;border-radius:50%;background:var(--gold);box-shadow:0 0 12px var(--gold)}
+  header h1{font-size:clamp(2rem,6vw,3.1rem);font-weight:800;line-height:.98;margin:16px 0 6px}
+  header h1 span{color:var(--gold)}
+  header p{color:#bcd1e8;max-width:560px;font-size:1rem}
+
+  /* grid */
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:14px}
+
+  .card{
+    position:relative;display:flex;align-items:center;gap:15px;
+    background:rgba(255,255,255,.055);
+    border:1px solid var(--line);border-radius:16px;
+    padding:18px 18px;text-decoration:none;color:inherit;
+    transition:transform .18s ease, background .18s ease, border-color .18s ease, box-shadow .18s ease;
+    overflow:hidden;backdrop-filter:blur(3px);
+  }
+  .card::before{
+    content:"";position:absolute;left:0;top:0;bottom:0;width:4px;
+    background:var(--accent,var(--blue));transition:width .18s ease;
+  }
+  .card:hover,.card:focus-visible{
+    transform:translateY(-3px);background:rgba(255,255,255,.10);
+    border-color:rgba(255,255,255,.28);box-shadow:0 14px 30px rgba(0,0,0,.28);outline:none;
+  }
+  .card:hover::before{width:6px}
+  .card:active{transform:translateY(-1px) scale(.99)}
+
+  .ico{
+    flex:0 0 50px;width:50px;height:50px;border-radius:13px;
+    display:grid;place-items:center;
+    background:color-mix(in srgb, var(--accent,var(--blue)) 26%, transparent);
+    border:1px solid color-mix(in srgb, var(--accent,var(--blue)) 45%, transparent);
+    color:#fff;
+  }
+  .ico svg{width:25px;height:25px;stroke:#fff;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+  .meta{flex:1;min-width:0}
+  .meta .t{font-family:'Saira',sans-serif;font-weight:700;font-size:1.12rem;color:#fff;line-height:1.1}
+  .meta .s{font-size:.82rem;color:#a9c1da;margin-top:3px}
+  .arrow{flex:0 0 auto;color:#7f9cbd;transition:transform .18s ease,color .18s ease}
+  .arrow svg{width:20px;height:20px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+  .card:hover .arrow{color:var(--gold);transform:translateX(3px)}
+
+  footer{margin-top:34px;color:#86a2c0;font-size:.8rem;border-top:1px solid var(--line);padding-top:18px}
+  footer b{color:#cfe0f3}
+
+  @media (max-width:520px){
+    .grid{grid-template-columns:1fr}
+    .wrap{padding:26px 16px 50px}
+    .card{padding:16px}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <span class="badge"><span class="dot"></span>Federação Portuguesa de Natação</span>
+    <h1>Painel de <span>Ferramentas</span></h1>
+    <p>Acesso rápido a todos os painéis e dashboards de alto rendimento. Toque para entrar.</p>
+  </header>
+
+  <nav class="grid" id="grid"></nav>
+
+  <footer>
+    <p><b>FPN — Hub de ferramentas.</b> Os nomes e descrições são editáveis no código. Cada botão abre o respetivo site alojado no GitHub Pages.</p>
+  </footer>
+
+</div>
+
+<script>
+/* Edita aqui os nomes/descrições/cores à vontade. */
+const LINKS = [
+  {url:'https://rjca28.github.io/mundial/',          title:'Campeonato do Mundo', sub:'Marcas-alvo e resultados internacionais', color:'#185FA5', icon:'globe'},
+  {url:'https://rjca28.github.io/la28/',             title:'LA28 — Qualificação',  sub:'Sistemas de qualificação olímpica',     color:'#BA7517', icon:'medal'},
+  {url:'https://rjca28.github.io/cop-po28/',         title:'COP · Projeto 2028',   sub:'Comité Olímpico de Portugal',           color:'#BA7517', icon:'flame'},
+  {url:'https://rjca28.github.io/par-po/',           title:'PAR · Alto Rendimento',sub:'Plano de Alto Rendimento',              color:'#2f74bb', icon:'target'},
+  {url:'https://rjca28.github.io/selecoes/',         title:'Seleções Nacionais',   sub:'Comparativo e gestão de seleções',      color:'#185FA5', icon:'users'},
+  {url:'https://rjca28.github.io/estagio-fpn/',      title:'Estágios Nacionais',   sub:'Planeamento de estágios',               color:'#2f74bb', icon:'calendar'},
+  {url:'https://rjca28.github.io/fpn-competicoes/',  title:'Competições FPN',      sub:'Calendário e regulamentos',             color:'#185FA5', icon:'trophy'},
+  {url:'https://rjca28.github.io/rankings/',         title:'Rankings',             sub:'Rankings nacionais',                    color:'#2f74bb', icon:'list'},
+  {url:'https://rjca28.github.io/ranking_nc_rf/',    title:'Ranking NC / RF',      sub:'Rankings por clube e prova',            color:'#2f74bb', icon:'bars'}
+];
+
+const ICONS = {
+  globe:'<circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.5 2.5 2.5 15 0 18M12 3c-2.5 2.5-2.5 15 0 18"/>',
+  medal:'<circle cx="12" cy="15" r="6"/><path d="M9 9 6 3M15 9l3-6M12 13v4M10.5 15h3"/>',
+  flame:'<path d="M12 3c3 4 5 6 5 9a5 5 0 0 1-10 0c0-1.5.5-2.5 1.5-3.5C9 10 11 8 12 3Z"/>',
+  target:'<circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="4"/><circle cx="12" cy="12" r="1"/>',
+  users:'<circle cx="9" cy="8" r="3.2"/><path d="M3.5 19a5.5 5.5 0 0 1 11 0M16 6.5a3 3 0 0 1 0 6M20.5 19a5.2 5.2 0 0 0-4-5"/>',
+  calendar:'<rect x="4" y="5" width="16" height="16" rx="2"/><path d="M4 9h16M8 3v4M16 3v4M9 14h2M14 14h2M9 17h2"/>',
+  trophy:'<path d="M8 4h8v5a4 4 0 0 1-8 0V4Z"/><path d="M8 5H5v2a3 3 0 0 0 3 3M16 5h3v2a3 3 0 0 1-3 3M10 14v3M14 14v3M8 20h8"/>',
+  list:'<path d="M8 6h12M8 12h12M8 18h12M4 6h.01M4 12h.01M4 18h.01"/>',
+  bars:'<path d="M5 20V10M10 20V4M15 20v-7M20 20V8"/>'
+};
+
+document.getElementById('grid').innerHTML = LINKS.map(l => `
+  <a class="card" href="${l.url}" style="--accent:${l.color}">
+    <span class="ico"><svg viewBox="0 0 24 24">${ICONS[l.icon]||ICONS.globe}</svg></span>
+    <span class="meta"><span class="t">${l.title}</span><span class="s">${l.sub}</span></span>
+    <span class="arrow"><svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+  </a>`).join('');
+</script>
+</body>
+</html>
