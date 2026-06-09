@@ -101,21 +101,25 @@
 <script>
 /* Edita aqui os nomes/descrições/cores à vontade. */
 const LINKS = [
-  {url:'https://rjca28.github.io/mundial/',          title:'Campeonato do Mundo', sub:'Marcas-alvo e resultados internacionais', color:'#185FA5', icon:'globe'},
-  {url:'https://rjca28.github.io/poreur/',           title:'POR EUR Comparação',   sub:'Comparação Portugal · Europa',          color:'#2f74bb', icon:'flag'},
-  {url:'https://rjca28.github.io/la28/',             title:'LA28 — Qualificação',  sub:'Sistemas de qualificação olímpica',     color:'#BA7517', icon:'medal'},
-  {url:'https://rjca28.github.io/cop-po28/',         title:'COP · Projeto 2028',   sub:'Comité Olímpico de Portugal',           color:'#BA7517', icon:'flame'},
-  {url:'https://rjca28.github.io/par-po/',           title:'PAR · Alto Rendimento',sub:'Plano de Alto Rendimento',              color:'#2f74bb', icon:'target'},
-  {url:'https://rjca28.github.io/selecoes/',         title:'Seleções Nacionais',   sub:'Comparativo e gestão de seleções',      color:'#185FA5', icon:'users'},
-  {url:'https://rjca28.github.io/estagio-fpn/',      title:'Estágios Nacionais',   sub:'Planeamento de estágios',               color:'#2f74bb', icon:'calendar'},
-  {url:'https://rjca28.github.io/fpn-competicoes/',  title:'Competições FPN',      sub:'Calendário e regulamentos',             color:'#185FA5', icon:'trophy'},
-  {url:'https://rjca28.github.io/rankings/',         title:'Rankings',             sub:'Rankings nacionais',                    color:'#2f74bb', icon:'list'},
-  {url:'https://rjca28.github.io/ranking_nc_rf/',    title:'Ranking NC / RF',      sub:'Rankings por clube e prova',            color:'#2f74bb', icon:'bars'}
+  {url:'https://rjca28.github.io/mundial/',          title:'Mundial',            color:'#185FA5', icon:'globe'},
+  {url:'https://rjca28.github.io/poreur/',           title:'POR EUR Comparação', color:'#2f74bb', icon:'flag'},
+  {url:'https://rjca28.github.io/paises/',           title:'Comparação Países',  color:'#2f74bb', icon:'map'},
+  {url:'https://rjca28.github.io/conv_paises/',      title:'Conversor Países',   color:'#2f74bb', icon:'swap'},
+  {url:'https://rjca28.github.io/la28/',             title:'LA28',               color:'#BA7517', icon:'medal'},
+  {url:'https://rjca28.github.io/cop-po28/',         title:'COP 2028',           color:'#BA7517', icon:'flame'},
+  {url:'https://rjca28.github.io/par-po/',           title:'PAR',                color:'#2f74bb', icon:'target'},
+  {url:'https://rjca28.github.io/selecoes/',         title:'Seleções',           color:'#185FA5', icon:'users'},
+  {url:'https://rjca28.github.io/estagio-fpn/',      title:'Estágios',           color:'#2f74bb', icon:'calendar'},
+  {url:'https://rjca28.github.io/fpn-competicoes/',  title:'Competições',        color:'#185FA5', icon:'trophy'},
+  {url:'https://rjca28.github.io/rankings/',         title:'Rankings',           color:'#2f74bb', icon:'list'},
+  {url:'https://rjca28.github.io/ranking_nc_rf/',    title:'Ranking NC/RF',      color:'#2f74bb', icon:'bars'}
 ];
 
 const ICONS = {
   globe:'<circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.5 2.5 2.5 15 0 18M12 3c-2.5 2.5-2.5 15 0 18"/>',
   flag:'<path d="M5 21V4M5 4c3-1.5 6 1.5 9 0v8c-3 1.5-6-1.5-9 0"/>',
+  map:'<path d="M9 4 3 6v14l6-2 6 2 6-2V4l-6 2-6-2Z"/><path d="M9 4v14M15 6v14"/>',
+  swap:'<path d="M7 4 3 8l4 4"/><path d="M3 8h13M17 20l4-4-4-4"/><path d="M21 16H8"/>',
   medal:'<circle cx="12" cy="15" r="6"/><path d="M9 9 6 3M15 9l3-6M12 13v4M10.5 15h3"/>',
   flame:'<path d="M12 3c3 4 5 6 5 9a5 5 0 0 1-10 0c0-1.5.5-2.5 1.5-3.5C9 10 11 8 12 3Z"/>',
   target:'<circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="4"/><circle cx="12" cy="12" r="1"/>',
@@ -129,7 +133,7 @@ const ICONS = {
 document.getElementById('grid').innerHTML = LINKS.map(l => `
   <a class="card" href="${l.url}" style="--accent:${l.color}">
     <span class="ico"><svg viewBox="0 0 24 24">${ICONS[l.icon]||ICONS.globe}</svg></span>
-    <span class="meta"><span class="t">${l.title}</span><span class="s">${l.sub}</span></span>
+    <span class="meta"><span class="t">${l.title}</span></span>
     <span class="arrow"><svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
   </a>`).join('');
 </script>
